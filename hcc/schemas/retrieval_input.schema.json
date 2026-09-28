@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "retrieval_input.schema.json",
+  "title": "RetrievalInput",
+  "description": "Everything the Retrieval component needs for one request. This is the Backend -> Retrieval contract (Section 14) — jointly owned by Person 1 and Person 2.",
+  "type": "object",
+  "properties": {
+    "query_text_raw": {
+      "type": "string",
+      "description": "The user's query exactly as typed, before any normalization."
+    },
+    "query_text_segmented": {
+      "type": "string",
+      "description": "The query after Vietnamese word segmentation (Section 8.2). This is what actually feeds the exact-string shortcut, lexical index, and embedding step — never the raw text."
+    },
+    "filters": {
+      "$ref": "filters.schema.json",
+      "description": "Explicit constraints extracted during interpretation, or carried over from ConversationState."
+    },
+    "conversation_session_id": {
+      "type": ["string", "null"],
+      "description": "ID of the ConversationState this request belongs to, if any. Null for a stateless/first-turn request.",
+      "default": null
+    },
+    "top_k": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Maximum number of candidate fragments to return before bundling.",
+      "default": 5
+    }
+  },
+  "required": ["query_text_raw", "query_text_segmented", "filters"],
+  "additionalProperties": false
+}

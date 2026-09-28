@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "conversation_state.schema.json",
+  "title": "ConversationState",
+  "description": "Compact structured context carried across turns in one session, so a follow-up like 'and the fee?' can be resolved without re-parsing the whole conversation as text (Section 3, principle 7; Section 9).",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique identifier for this conversation session."
+    },
+    "last_resolved_procedure_id": {
+      "type": ["string", "null"],
+      "description": "The most recently resolved procedure_id, used to interpret a follow-up that doesn't re-name the procedure. Null if nothing has been resolved yet, or explicitly cleared on a topic switch (Section 9).",
+      "default": null
+    },
+    "last_requested_section_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["fee", "processing_time", "required_documents", "eligibility", "submission_location", "legal_basis", "validity_period", "other"]
+      },
+      "description": "Which fields were asked about most recently, for the same reason as last_resolved_procedure_id.",
+      "default": []
+    },
+    "active_filters": {
+      "$ref": "filters.schema.json",
+      "description": "Filters currently carried forward across turns (e.g. a jurisdiction or effective date the user set earlier in the conversation)."
+    },
+    "unresolved_references": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Follow-up phrases the interpretation step could not yet resolve against last_resolved_procedure_id (e.g. an ambiguous pronoun), kept so the next turn can retry.",
+      "default": []
+    },
+    "recent_raw_turns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 3,
+      "description": "Optional, capped rolling buffer of the last few raw user messages (verbatim, unsegmented). Not consulted by default interpretation — the structured fields above (last_resolved_procedure_id, last_requested_section_types, active_filters) remain the primary and preferred path. This exists only as a fallback for Query Interpretation to consult when those structured fields fail to resolve a follow-up reference. The cap at 3 is deliberate: this must never grow into a full transcript, or it reintroduces the non-deterministic 'let the model re-read everything' problem this design was built to avoid (Section 3, principle 2).",
+      "default": []
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp this state was last modified. On a detected procedure switch or explicit correction, last_resolved_procedure_id and last_requested_section_types must be reset rather than left stale (Section 9)."
+    }
+  },
+  "required": ["session_id", "active_filters", "updated_at"],
+  "additionalProperties": false
+}

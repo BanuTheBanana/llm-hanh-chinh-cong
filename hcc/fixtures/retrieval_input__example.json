@@ -1,0 +1,11 @@
+{
+  "query_text_raw": "thời hạn cấp đổi thẻ căn cước là bao lâu",
+  "query_text_segmented": "thời_hạn cấp_đổi thẻ căn_cước là bao_lâu",
+  "filters": {
+    "jurisdiction": null,
+    "effective_date": null,
+    "scope": null
+  },
+  "conversation_session_id": null,
+  "top_k": 5
+}

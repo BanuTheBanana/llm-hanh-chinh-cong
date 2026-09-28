@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grounded_answer.schema.json",
+  "title": "GroundedAnswer",
+  "description": "The final output of the pipeline: answer text plus status plus citations plus evidence traceability. This is the Backend <-> Generation contract (Section 14).",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["answered", "clarification_needed", "insufficient_data"],
+      "description": "'answered' when grounding accepted the evidence as sufficient. 'clarification_needed' when EvidenceBundle.confidence_status was 'ambiguous'. 'insufficient_data' when it was 'low_confidence' or grounding found the evidence inadequate even though a procedure was resolved."
+    },
+    "answer_text": {
+      "type": "string",
+      "description": "The generated answer. Empty string when status is 'clarification_needed' or 'insufficient_data' — use clarification_prompt instead in those cases."
+    },
+    "clarification_prompt": {
+      "type": ["string", "null"],
+      "description": "The question to show the user when status is 'clarification_needed' (e.g. naming the two ambiguous_candidates from EvidenceBundle) or 'insufficient_data' (asking them to rephrase). Null when status is 'answered'.",
+      "default": null
+    },
+    "citations": {
+      "type": "array",
+      "items": { "$ref": "citation.schema.json" },
+      "description": "Every citation backing answer_text. Must be empty when status is not 'answered'.",
+      "default": []
+    },
+    "evidence_bundle_id": {
+      "type": "string",
+      "description": "ID of the EvidenceBundle this answer was generated from, for full audit traceability."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp this answer was produced."
+    }
+  },
+  "required": ["status", "answer_text", "citations", "evidence_bundle_id", "created_at"],
+  "additionalProperties": false
+}

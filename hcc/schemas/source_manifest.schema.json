@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_manifest.schema.json",
+  "title": "SourceManifest",
+  "description": "Authoritative metadata about one underlying legal/administrative source document. This is the audit root everything else points back to.",
+  "type": "object",
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "description": "Stable unique identifier for this source, referenced by ProcedureRecord.source_id and ProcedureFragment.source_id."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title of the source document (e.g. the decree/circular name)."
+    },
+    "publishing_authority": {
+      "type": "string",
+      "description": "The government body or authority that issued this source."
+    },
+    "reference_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL or reference locator for the original source, if available."
+    },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "reviewed", "published", "deprecated"],
+      "description": "Whether this source has passed review. Unreviewed material must never be silently treated as authoritative (Section 7)."
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date this source's content became legally effective."
+    },
+    "superseded_by": {
+      "type": ["string", "null"],
+      "description": "source_id of the source that replaces this one, if this version has been superseded. Null if this is current.",
+      "default": null
+    },
+    "version": {
+      "type": "string",
+      "description": "Version label for this source (e.g. a document revision number)."
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "Hash of the full source content, used to detect drift between what was indexed and what currently exists."
+    },
+    "ingested_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp this source was pulled into a corpus snapshot."
+    }
+  },
+  "required": ["source_id", "title", "review_status", "effective_date", "version", "content_hash", "ingested_at"],
+  "additionalProperties": false
+}

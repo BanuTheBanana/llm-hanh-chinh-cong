@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "procedure_record.schema.json",
+  "title": "ProcedureRecord",
+  "description": "Canonical identity of one administrative procedure (one of the ~38 in the corpus). This is the object the exact-string shortcut and dense retrieval both resolve queries down to (Section 8).",
+  "type": "object",
+  "properties": {
+    "procedure_id": {
+      "type": "string",
+      "description": "Stable unique identifier, e.g. 'PROC-014'. Referenced by ProcedureFragment.procedure_id and by EvidenceBundle.resolved_procedure_id."
+    },
+    "canonical_name": {
+      "type": "string",
+      "description": "The official Vietnamese name of the procedure, as used in the source law/decree."
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Known alternate names, abbreviations, and colloquial phrasings that map to this procedure. Consulted by the exact-string shortcut (Section 8.1) before falling through to embedding-based retrieval.",
+      "default": []
+    },
+    "official_codes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Any official procedure codes assigned by the issuing authority.",
+      "default": []
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "The administrative jurisdiction this procedure applies to (e.g. a province, or 'national')."
+    },
+    "fragment_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "IDs of every ProcedureFragment belonging to this procedure. Kept here so a resolved procedure_id can be expanded to its full set of fields without a separate query."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "ID of the SourceManifest this procedure's definition was extracted from."
+    }
+  },
+  "required": ["procedure_id", "canonical_name", "jurisdiction", "fragment_ids", "source_id"],
+  "additionalProperties": false
+}

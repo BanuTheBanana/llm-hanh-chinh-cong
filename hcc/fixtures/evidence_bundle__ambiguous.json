@@ -1,0 +1,24 @@
+{
+  "bundle_id": "BUNDLE-SAMPLE-AMBIGUOUS",
+  "query_text_segmented": "thời_hạn làm thẻ căn_cước là bao_lâu",
+  "resolved_procedure_id": null,
+  "top_score": 0.86,
+  "second_score": 0.82,
+  "margin": 0.04,
+  "confidence_status": "ambiguous",
+  "ambiguous_candidates": [
+    {
+      "procedure_id": "PROC-001",
+      "canonical_name": "Cấp đổi thẻ căn cước công dân",
+      "score": 0.86
+    },
+    {
+      "procedure_id": "PROC-002",
+      "canonical_name": "Cấp thẻ căn cước công dân lần đầu",
+      "score": 0.82
+    }
+  ],
+  "evidence": [],
+  "fusion_method": "weighted_sum(bm25_norm, cosine) [placeholder]",
+  "created_at": "2026-09-28T00:00:00Z"
+}

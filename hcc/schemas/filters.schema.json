@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "filters.schema.json",
+  "title": "Filters",
+  "description": "Explicit constraints extracted from the query or carried over from conversation state. A value object (not independently stored) — embedded inline wherever it's used.",
+  "type": "object",
+  "properties": {
+    "jurisdiction": {
+      "type": ["string", "null"],
+      "description": "Explicit jurisdiction constraint, if the user named one. Null if unspecified.",
+      "default": null
+    },
+    "effective_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Date the answer should be evaluated as of. Null means 'currently effective'. Prevents silently mixing source versions (Section 3, principle 5).",
+      "default": null
+    },
+    "scope": {
+      "type": ["string", "null"],
+      "description": "Any other explicit scoping the user gave (e.g. a specific applicant category).",
+      "default": null
+    }
+  },
+  "additionalProperties": false
+}

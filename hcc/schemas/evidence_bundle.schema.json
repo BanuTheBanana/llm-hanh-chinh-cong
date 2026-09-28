@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence_bundle.schema.json",
+  "title": "EvidenceBundle",
+  "description": "Bounded evidence set passed to grounding and generation. Under resolution-by-retrieval (Section 8-9) this object also carries the confidence signal itself — there is no separate resolver result to consult.",
+  "type": "object",
+  "properties": {
+    "bundle_id": {
+      "type": "string",
+      "description": "Unique ID for this bundle, referenced by GroundedAnswer.evidence_bundle_id."
+    },
+    "query_text_segmented": {
+      "type": "string",
+      "description": "The segmented query this bundle was produced for, copied from RetrievalInput for traceability."
+    },
+    "resolved_procedure_id": {
+      "type": ["string", "null"],
+      "description": "The procedure_id that retrieval resolved to. Null when confidence_status is 'low_confidence' (no good match found) — never guess a procedure_id in that case.",
+      "default": null
+    },
+    "top_score": {
+      "type": ["number", "null"],
+      "description": "Score of the single best-ranked candidate across fused retrieval. Null only if retrieval returned zero candidates.",
+      "default": null
+    },
+    "second_score": {
+      "type": ["number", "null"],
+      "description": "Score of the runner-up candidate, needed to compute margin. Null if fewer than two candidates were returned.",
+      "default": null
+    },
+    "margin": {
+      "type": ["number", "null"],
+      "description": "top_score minus second_score. A small margin with a high top_score signals genuine ambiguity between two candidates, not low confidence (Section 9). Null if second_score is null.",
+      "default": null
+    },
+    "confidence_status": {
+      "type": "string",
+      "enum": ["resolved", "ambiguous", "low_confidence"],
+      "description": "'resolved' = high top_score with a clear margin, proceed normally. 'ambiguous' = high top_score but narrow margin, ask 'did you mean X or Y'. 'low_confidence' = top_score itself is below the absolute floor, abstain/ask to rephrase. Thresholds for both cases are tuned empirically (Section 9), not hardcoded."
+    },
+    "ambiguous_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "procedure_id": { "type": "string" },
+          "canonical_name": { "type": "string" },
+          "score": { "type": "number" }
+        },
+        "required": ["procedure_id", "canonical_name", "score"],
+        "additionalProperties": false
+      },
+      "description": "Populated only when confidence_status is 'ambiguous' — the near-tied candidates to present back to the user for disambiguation. Empty otherwise.",
+      "default": []
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "$ref": "evidence.schema.json" },
+      "description": "The bounded set of fragments to pass to grounding/generation. Empty when confidence_status is 'low_confidence'."
+    },
+    "fusion_method": {
+      "type": "string",
+      "description": "Description/name of the rule used to fuse lexical and dense candidates (Section 8.4)."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp this bundle was produced, for audit and cache invalidation."
+    }
+  },
+  "required": ["bundle_id", "query_text_segmented", "resolved_procedure_id", "confidence_status", "evidence", "fusion_method", "created_at"],
+  "additionalProperties": false
+}

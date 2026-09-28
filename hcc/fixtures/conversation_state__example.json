@@ -1,0 +1,15 @@
+{
+  "session_id": "sess-sample-001",
+  "last_resolved_procedure_id": "PROC-001",
+  "last_requested_section_types": [
+    "processing_time"
+  ],
+  "active_filters": {
+    "jurisdiction": null,
+    "effective_date": null,
+    "scope": null
+  },
+  "unresolved_references": [],
+  "recent_raw_turns": [],
+  "updated_at": "2026-09-28T00:00:00Z"
+}

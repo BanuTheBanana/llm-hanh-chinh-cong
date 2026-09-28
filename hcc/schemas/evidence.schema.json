@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence.schema.json",
+  "title": "Evidence",
+  "description": "One returned fragment, snapshotted at retrieval time with its score and provenance. Embedded inline inside EvidenceBundle — not independently stored, since a new retrieval always produces fresh Evidence.",
+  "type": "object",
+  "properties": {
+    "fragment_id": {
+      "type": "string",
+      "description": "ID of the underlying ProcedureFragment."
+    },
+    "procedure_id": {
+      "type": "string",
+      "description": "ID of the underlying ProcedureRecord (denormalized here so grounding/generation don't need a lookup)."
+    },
+    "text": {
+      "type": "string",
+      "description": "Snapshot of the fragment's text at retrieval time."
+    },
+    "score": {
+      "type": "number",
+      "description": "This fragment's relevance score from whichever method produced it."
+    },
+    "method": {
+      "type": "string",
+      "enum": ["exact_match", "lexical", "dense", "fused"],
+      "description": "Which retrieval path produced this piece of evidence (Section 8). 'exact_match' means the Section 8.1 shortcut fired."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "ID of the SourceManifest this evidence traces back to."
+    },
+    "source_version": {
+      "type": "string",
+      "description": "Version label of the source at the time this evidence was retrieved, for audit."
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Effective date of the source this evidence came from."
+    },
+    "source_locator": {
+      "type": "string",
+      "description": "Pointer into the original source document, copied from ProcedureFragment.source_locator."
+    }
+  },
+  "required": ["fragment_id", "procedure_id", "text", "score", "method", "source_id", "source_version", "effective_date", "source_locator"],
+  "additionalProperties": false
+}

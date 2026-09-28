@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "procedure_fragment.schema.json",
+  "title": "ProcedureFragment",
+  "description": "One retrievable evidence unit — a single field's worth of text about a procedure (e.g. just the fee, or just the processing time). This is the unit that lexical/dense retrieval actually ranks (Section 8.3-8.4); field-level accuracy is measured at this granularity, not at the procedure level (Section 12).",
+  "type": "object",
+  "properties": {
+    "fragment_id": {
+      "type": "string",
+      "description": "Stable unique identifier for this fragment, referenced by Evidence.fragment_id and Citation.fragment_id."
+    },
+    "procedure_id": {
+      "type": "string",
+      "description": "ID of the ProcedureRecord this fragment belongs to."
+    },
+    "section_type": {
+      "type": "string",
+      "enum": [
+        "fee",
+        "processing_time",
+        "required_documents",
+        "eligibility",
+        "submission_location",
+        "legal_basis",
+        "validity_period",
+        "other"
+      ],
+      "description": "Which kind of field this fragment answers. This is the value that must be ranked correctly for field-level retrieval accuracy (Section 9/12)."
+    },
+    "text": {
+      "type": "string",
+      "description": "The actual evidence text, in Vietnamese, as it will be shown to the grounding/generation step."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "ID of the SourceManifest this fragment's text was extracted from."
+    },
+    "ordinal": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Position of this fragment within its source document, for stable ordering and citation locators."
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "Hash of this fragment's exact text, used to detect drift and to fingerprint the corpus snapshot (Section 7)."
+    },
+    "source_locator": {
+      "type": "string",
+      "description": "Pointer back into the source document (e.g. article/clause number) so a citation can be audited against the original text."
+    }
+  },
+  "required": ["fragment_id", "procedure_id", "section_type", "text", "source_id", "ordinal", "content_hash", "source_locator"],
+  "additionalProperties": false
+}

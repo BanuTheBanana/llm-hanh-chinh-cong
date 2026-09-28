@@ -1,0 +1,15 @@
+{
+  "status": "answered",
+  "answer_text": "Thời hạn giải quyết cấp đổi thẻ căn cước công dân là 7 ngày làm việc kể từ khi nhận đủ hồ sơ.",
+  "clarification_prompt": null,
+  "citations": [
+    {
+      "claim_text": "7 ngày làm việc kể từ khi nhận đủ hồ sơ",
+      "fragment_id": "FRAG-001-time",
+      "source_id": "SRC-SAMPLE-001",
+      "source_locator": "Điều 1, khoản 2 (mẫu)"
+    }
+  ],
+  "evidence_bundle_id": "BUNDLE-SAMPLE-RESOLVED",
+  "created_at": "2026-09-28T00:00:00Z"
+}
