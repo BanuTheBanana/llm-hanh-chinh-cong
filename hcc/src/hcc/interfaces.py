@@ -19,6 +19,12 @@ class Retriever(Protocol):
     def retrieve(self, retrieval_input: dict) -> dict: ...
 
 
+class StatefulRetriever(Protocol):
+    """Optional extension for retrieval that needs structured follow-up context."""
+
+    def retrieve_with_state(self, retrieval_input: dict, conversation_state: dict | None) -> dict: ...
+
+
 class Generator(Protocol):
     """Person 3 owns the real implementation.
 

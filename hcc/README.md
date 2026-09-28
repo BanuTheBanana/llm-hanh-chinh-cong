@@ -74,7 +74,14 @@ touches another person's work, so they should go through a short proposal.
 ## Handoff Notes
 
 - Person 1 implements `Segmenter.segment(text)` and `Retriever.retrieve(retrieval_input)`;
-   retrieval must populate confidence scores/margin and return evidence with provenance.
+   retrieval must echo `query_text_segmented` exactly, populate confidence scores/margin,
+   and return evidence with provenance. The pipeline validates the input/bundle pair and
+   raises `ContractError` if the bundle refers to a different query.
+- For retrieval-aware follow-ups, implement the optional
+   `retrieve_with_state(retrieval_input, conversation_state)` method. The pipeline prefers
+   this method when present and falls back to `retrieve(retrieval_input)` for stateless or
+   legacy retrievers. `RetrievalInput` remains unchanged; the structured state is passed as a
+   separate argument and includes the prior resolved procedure and requested sections.
 - Person 2 extracts explicit filters, retains structured state, and validates requested
    section coverage using evidence text. `Evidence` currently has no `section_type` field,
    so section coverage uses deterministic text rules rather than changing the frozen schema.

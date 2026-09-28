@@ -56,7 +56,7 @@ def extract_explicit_filters(text: str) -> dict:
     if jurisdiction_match:
         filters["jurisdiction"] = " ".join(jurisdiction_match.group(1).split())
 
-    scope_match = re.search(r"\b(?:đối với|dành cho|cho)\s+([^,.!?;]{2,60})", text, re.IGNORECASE)
+    scope_match = re.search(r"\b(?:đối với|dành cho)\s+([^,.!?;]{2,60})", text, re.IGNORECASE)
     if scope_match:
         filters["scope"] = " ".join(scope_match.group(1).split())
 

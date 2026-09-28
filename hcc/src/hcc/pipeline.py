@@ -10,7 +10,7 @@ from .grounding import check_sufficiency, verify_citations
 from .conversation import advance_conversation_state
 from .interfaces import AuditLog, ConversationStore, Generator, Retriever, Segmenter
 from .interpretation import interpret, requested_section_types
-from .validation import assert_valid
+from .validation import assert_valid, assert_valid_cross_objects
 
 logger = logging.getLogger("hcc.pipeline")
 
@@ -57,8 +57,16 @@ class Pipeline:
         )
         assert_valid("retrieval_input", retrieval_input)
 
-        bundle = self.retriever.retrieve(retrieval_input)
+        retrieve_with_state = getattr(self.retriever, "retrieve_with_state", None)
+        if callable(retrieve_with_state):
+            bundle = retrieve_with_state(retrieval_input, state)
+        else:
+            bundle = self.retriever.retrieve(retrieval_input)
         assert_valid("evidence_bundle", bundle)
+        assert_valid_cross_objects(
+            retrieval_input=retrieval_input,
+            evidence_bundle=bundle,
+        )
 
         status = bundle["confidence_status"]
 

@@ -1,0 +1,48 @@
+[
+  {
+    "procedure_id": "PROC-001",
+    "canonical_name": "Cấp đổi thẻ căn cước công dân",
+    "aliases": [
+      "đổi thẻ căn cước",
+      "cấp đổi CCCD"
+    ],
+    "official_codes": [],
+    "jurisdiction": "national",
+    "fragment_ids": [
+      "FRAG-001-fee",
+      "FRAG-001-time",
+      "FRAG-001-docs"
+    ],
+    "source_id": "SRC-SAMPLE-001"
+  },
+  {
+    "procedure_id": "PROC-002",
+    "canonical_name": "Cấp thẻ căn cước công dân lần đầu",
+    "aliases": [
+      "làm thẻ căn cước lần đầu",
+      "cấp mới CCCD"
+    ],
+    "official_codes": [],
+    "jurisdiction": "national",
+    "fragment_ids": [
+      "FRAG-002-fee",
+      "FRAG-002-time"
+    ],
+    "source_id": "SRC-SAMPLE-001"
+  },
+  {
+    "procedure_id": "PROC-003",
+    "canonical_name": "Đăng ký khai sinh",
+    "aliases": [
+      "khai sinh",
+      "làm giấy khai sinh"
+    ],
+    "official_codes": [],
+    "jurisdiction": "national",
+    "fragment_ids": [
+      "FRAG-003-fee",
+      "FRAG-003-time"
+    ],
+    "source_id": "SRC-SAMPLE-001"
+  }
+]

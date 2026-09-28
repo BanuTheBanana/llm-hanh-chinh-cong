@@ -1,0 +1,11 @@
+{
+  "source_id": "SRC-SAMPLE-001",
+  "title": "Bộ dữ liệu mẫu để kiểm thử (không phải văn bản pháp luật thật)",
+  "publishing_authority": "Nhóm dự án (dữ liệu mẫu)",
+  "review_status": "reviewed",
+  "effective_date": "2024-01-01",
+  "superseded_by": null,
+  "version": "sample-1",
+  "content_hash": "3db520745723f35b7db6aa2c1043a3e1e0335d4436d8ec5f0894f76adc927613",
+  "ingested_at": "2026-09-28T00:00:00Z"
+}

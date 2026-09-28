@@ -72,8 +72,8 @@ def test_resolved_bundle_with_no_evidence_skips_generation():
             return bundle
 
     gen = MockGenerator()
-    out = Pipeline(StubSegmenter(), EmptyRetriever(), gen, clock=lambda: FIXED_TIME).answer("x")
-    assert out["status"] == "insufficient_data"
+    with pytest.raises(ContractError, match="resolved bundle must contain evidence"):
+        Pipeline(StubSegmenter(), EmptyRetriever(), gen, clock=lambda: FIXED_TIME).answer("x")
     assert gen.calls == []
 
 
@@ -85,8 +85,17 @@ def test_ambiguous_bundle_without_candidates_degrades_safely():
         def retrieve(self, _):
             return bundle
 
-    out = Pipeline(StubSegmenter(), R(), MockGenerator(), clock=lambda: FIXED_TIME).answer("x")
-    assert out["status"] == "insufficient_data"
+    with pytest.raises(ContractError, match="at least two candidates"):
+        Pipeline(StubSegmenter(), R(), MockGenerator(), clock=lambda: FIXED_TIME).answer("x")
+
+
+def test_retriever_bundle_must_match_the_request_query():
+    class MismatchedRetriever:
+        def retrieve(self, _):
+            return load_fixture("evidence_bundle__resolved")
+
+    with pytest.raises(ContractError, match="query_text_segmented does not match"):
+        Pipeline(StubSegmenter(), MismatchedRetriever(), MockGenerator()).answer("new query")
 
 
 def test_retriever_contract_violation_fails_loudly():

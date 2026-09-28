@@ -7,7 +7,7 @@ from hcc.interpretation import extract_explicit_filters, requested_section_types
 from hcc.mocks import MockGenerator, MockRetriever, StubSegmenter, load_fixture
 from hcc.pipeline import Pipeline
 from hcc.storage import SQLiteStore
-from hcc.validation import cross_object_errors
+from hcc.validation import ContractError, cross_object_errors
 
 
 def test_interpretation_extracts_sections_and_explicit_filters():
@@ -18,6 +18,16 @@ def test_interpretation_extracts_sections_and_explicit_filters():
         "effective_date": "2026-09-28",
         "scope": None,
     }
+
+
+def test_scope_filter_does_not_treat_generic_cho_as_applicant_scope():
+    query = "lệ phí cho thủ tục cấp đổi thẻ căn cước"
+    assert extract_explicit_filters(query)["scope"] is None
+
+
+def test_scope_filter_accepts_explicit_applicant_phrase():
+    query = "điều kiện đăng ký đối với trẻ em"
+    assert extract_explicit_filters(query)["scope"] == "trẻ em"
 
 
 def test_state_transition_replaces_stale_procedure_context():
@@ -53,6 +63,29 @@ def test_pipeline_abstains_when_requested_section_is_missing():
     answer = pipeline.answer("điều kiện và lệ phí cấp đổi thẻ căn cước là gì")
     assert answer["status"] == "insufficient_data"
     assert pipeline.generator.calls == []
+
+
+def test_pipeline_passes_conversation_state_to_stateful_retriever():
+    class StatefulMockRetriever:
+        def __init__(self):
+            self.received_state = None
+
+        def retrieve(self, retrieval_input):
+            raise AssertionError("state-aware entry point should be used")
+
+        def retrieve_with_state(self, retrieval_input, conversation_state):
+            self.received_state = conversation_state
+            bundle = load_fixture("evidence_bundle__resolved")
+            bundle["query_text_segmented"] = retrieval_input["query_text_segmented"]
+            return bundle
+
+    state = new_conversation_state("follow-up-session", now="2026-09-28T00:00:00Z")
+    state["last_resolved_procedure_id"] = "PROC-001"
+    state["last_requested_section_types"] = ["processing_time"]
+    retriever = StatefulMockRetriever()
+    pipeline = Pipeline(StubSegmenter(), retriever, MockGenerator())
+    pipeline.answer("còn lệ phí thì sao", state=state)
+    assert retriever.received_state == state
 
 
 def test_sqlite_store_persists_conversation_and_audit(tmp_path):

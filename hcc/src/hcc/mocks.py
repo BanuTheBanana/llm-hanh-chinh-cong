@@ -35,7 +35,9 @@ class MockRetriever:
         self.calls.append(retrieval_input)
         query = retrieval_input["query_text_raw"]
         scenario = next((s for key, s in self.scenarios.items() if key in query), self.default)
-        return load_fixture(f"evidence_bundle__{scenario}")
+        bundle = load_fixture(f"evidence_bundle__{scenario}")
+        bundle["query_text_segmented"] = retrieval_input["query_text_segmented"]
+        return bundle
 
 
 class MockGenerator:

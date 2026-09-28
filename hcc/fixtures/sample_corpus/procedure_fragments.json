@@ -1,0 +1,72 @@
+[
+  {
+    "fragment_id": "FRAG-001-fee",
+    "procedure_id": "PROC-001",
+    "section_type": "fee",
+    "text": "Lệ phí cấp đổi thẻ căn cước công dân: 30.000 đồng (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 0,
+    "content_hash": "599737b8a9a185a9c2c0538a5cd208a86321a3dd3403ad73bbedfd3d296b6e00",
+    "source_locator": "Điều 1, khoản 1 (mẫu)"
+  },
+  {
+    "fragment_id": "FRAG-001-time",
+    "procedure_id": "PROC-001",
+    "section_type": "processing_time",
+    "text": "Thời hạn giải quyết cấp đổi thẻ căn cước công dân: 7 ngày làm việc kể từ khi nhận đủ hồ sơ (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 1,
+    "content_hash": "b7e8202ce286fd37ec0683f1fe808698ef818020a44f57836422bf28e67531d1",
+    "source_locator": "Điều 1, khoản 2 (mẫu)"
+  },
+  {
+    "fragment_id": "FRAG-001-docs",
+    "procedure_id": "PROC-001",
+    "section_type": "required_documents",
+    "text": "Hồ sơ cấp đổi thẻ căn cước công dân gồm: tờ khai theo mẫu và thẻ căn cước công dân cũ (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 2,
+    "content_hash": "dc1770be77335d6c9f6000c0b07d69a5f38b574bbba449b709532e228349f51c",
+    "source_locator": "Điều 1, khoản 3 (mẫu)"
+  },
+  {
+    "fragment_id": "FRAG-002-fee",
+    "procedure_id": "PROC-002",
+    "section_type": "fee",
+    "text": "Lệ phí cấp thẻ căn cước công dân lần đầu: miễn lệ phí (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 3,
+    "content_hash": "6c19f48cb4d37bd5eaab7b3276f7d6cd076279f46c8581a983e1e2a4ff31ca50",
+    "source_locator": "Điều 2, khoản 1 (mẫu)"
+  },
+  {
+    "fragment_id": "FRAG-002-time",
+    "procedure_id": "PROC-002",
+    "section_type": "processing_time",
+    "text": "Thời hạn giải quyết cấp thẻ căn cước công dân lần đầu: 10 ngày làm việc kể từ khi nhận đủ hồ sơ (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 4,
+    "content_hash": "520f8945c486705e181870d27fbabbdac94852cee083ad69a354f5fdebdc2075",
+    "source_locator": "Điều 2, khoản 2 (mẫu)"
+  },
+  {
+    "fragment_id": "FRAG-003-fee",
+    "procedure_id": "PROC-003",
+    "section_type": "fee",
+    "text": "Lệ phí đăng ký khai sinh: miễn lệ phí (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 5,
+    "content_hash": "ee23f78b2df6214b9c75a3fad48a19ead5c665b6c38fdae8735d50909968a4fe",
+    "source_locator": "Điều 3, khoản 1 (mẫu)"
+  },
+  {
+    "fragment_id": "FRAG-003-time",
+    "procedure_id": "PROC-003",
+    "section_type": "processing_time",
+    "text": "Thời hạn giải quyết đăng ký khai sinh: 3 ngày làm việc kể từ khi nhận đủ hồ sơ (dữ liệu mẫu để kiểm thử).",
+    "source_id": "SRC-SAMPLE-001",
+    "ordinal": 6,
+    "content_hash": "bc8e648595feb95d6ac06cf33c4af1f8602678c4f73cd583fc1c1f09f2b2e41e",
+    "source_locator": "Điều 3, khoản 2 (mẫu)"
+  }
+]
